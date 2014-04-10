@@ -5,7 +5,7 @@
     <title>Compteur de mots et occurences</title>
 </head>
 <body>
-<h1>Compteur de mots</h1>
+<h1>Compteur de mots </h1>
     <form action="http://localhost/Lab/compteur-file/index.php" method="POST">
         <textarea rows="15" cols="175" name="mots" id="mots"><?php if (isset($_POST['mots'])) { echo htmlspecialchars($_POST['mots']);} ?></textarea><br>
         <input type="submit" value="OK" name="submit_button" id="submit_button">
