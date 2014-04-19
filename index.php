@@ -16,8 +16,8 @@
     </form>
     <h2>Statistiques :</h2>
      <?php
-        $requete_all = isset($_POST['mots']) ? $_POST['mots'] : '';
-        $nbr_expressions = strlen(utf8_decode($requete_all));
+        echo $requete_all = isset($_POST['mots']) ? $_POST['mots'] : '';
+        $nbr_caracteres = strlen(utf8_decode($requete_all));
         $carateres_accentues = "âàáãäåÀÁÃÂçÇêéèêëÊÉìíïîÌÍÎÏñôðòóõöÒÓÔÕÖûùúüÙÚÛÜÿýÝŸ";
         $file = fopen("stop-words/stop-words_french_fr.txt", "r");
         $stopwords = array();
@@ -25,33 +25,40 @@
            $stopwords[] = fgets($file);
         }
         fclose($file);
+        echo '<br><br>Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.';
     ?>
     <ul>
         <!--
             Compte le nombre de mot avec la liste des accents considérés comme des accentes
             print_r (str_word_count($requete_all, 1,"àáãâçêéíîóõôúÀÁÃÂÇÊÉÍÎÓÕÔÚ")); => affiche le tableau des mots
         -->
-        <li><strong><?php $nbr_mots = str_word_count($requete_all, 0, $carateres_accentues); echo ($nbr_mots);?></strong> mots :
+        <li><strong><?php echo $nbr_mots = str_word_count($requete_all, 0, $carateres_accentues);?></strong> mots :
             <ul>
               <li><?php
-                    /** Arrêté ici **/
                     foreach ($stopwords as &$word) {
-                        echo $word = preg_quote($word, '/');
+                            $word =  '/\b' . preg_quote(rtrim($word), '/' ) . '\b/u';
                     }
-                    $test2 = preg_replace($word, '', $requete_all);
-                    ?><pre><?php print_r($stopwords);?></pre><?php
-                    echo count($test2); ?> mots hors stop words (%)</li>
-              <!--li> stop words (%)</li-->
+                    //echo 'diff : '.$word = array_diff( $word, $stopwords );
+                    //$requete_all = mb_split( '[ \n]+', mb_strtolower( $requete_all, 'utf-8' ) );
+
+                    $string = preg_replace($stopwords, '', $requete_all);
+                    //var_dump($stopwords);
+                    var_dump($string);?>
+                    <strong><?php echo $nbr_mots_hors_stopwords = str_word_count($string, 0, $carateres_accentues); ?></strong> mots hors stop words (<?php echo $pourcentage_stopwords = round(($nbr_mots_hors_stopwords*100/$nbr_mots), 0);?> %)</li>
+              <li><strong><?php echo ($nbr_mots-$nbr_mots_hors_stopwords); ?></strong> stop words (<?php echo (100-$pourcentage_stopwords);?> %)</li>
             </ul>
           </li>
-      <li><strong><?php //$array2 = array_unique($requete_all);echo count($array2);?></strong> mots uniques :</strong>
+      <li><strong><?php
+            $test = explode(' ', strtolower($requete_all));
+            echo $mot_unique = count ($nbr_mots_unique = array_unique($test));?></strong> mots uniques :</strong>
         <ul>
-          <li><?php //echo preg_replace("\b$stopwords\b", ",", $array2);?> mots hors stop words (%)</li>
-          <li> stop words (%)</li>
+          <li><strong><?php  echo $mots_unique_hors = count(array_unique($string = explode(' ', strtolower($string)))); ?></strong> mots hors stop words (<?php echo $pourcentage_stopwords_unique = round(($mots_unique_hors*100/$mot_unique), 0);?>%)</li>
+          <li><strong><?php echo ($mot_unique-$mots_unique_hors); ?></strong> stop words (<?php echo (100-$pourcentage_stopwords_unique);?>%)</li>
         </ul>
       </li>
-      <li><strong><?php echo $nbr_expressions;?></strong> caratères</li>
-      <li><strong><?php $sansespaces = str_replace(' ', '', $requete_all);echo strlen(utf8_decode($sansespaces)); ?></strong> caractères sans les espaces</li>
+      <li><strong><?php echo $nbr_caracteres;?></strong> caratères</li>
+      <li><strong><?php
+      echo $nbr_caracteres_sans_espaces = strlen(utf8_decode(str_replace(' ', '', utf8_decode($requete_all)))); ?></strong> caractères sans les espaces</li>
     </ul>
         <h3>Liste des occurences :</h3>
             <?php
