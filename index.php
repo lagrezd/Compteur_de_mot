@@ -51,7 +51,14 @@
             //var_dump($nbr_mots_unique);
             ?></strong> mots uniques (mots convertis en minuscule pour les doublons):</strong>
         <ul>
-          <li><strong><?php  echo $mots_unique_hors = count(array_unique($mots_hors_stopwords = explode(' ', strtolower($mots_hors_stopwords)))); ?></strong> mots hors stop words (<?php echo $pourcentage_stopwords_unique = round(($mots_unique_hors*100/$mot_unique), 0);?>%)</li>
+          <li><strong>
+          <!-- supprimer les tableaux vides et lignes vides
+            array_filter(array_map('array_filter', $montab));
+          -->
+          <?php
+            $mots_hors_stopwords = explode(' ', $mots_hors_stopwords);
+            $mots_hors_stopwords = array_filter(array_unique($mots_hors_stopwords));
+          echo $mots_unique_hors = count($mots_hors_stopwords); ?></strong> mots hors stop words (<?php echo $pourcentage_stopwords_unique = round(($mots_unique_hors*100/$mot_unique), 0);?>%)</li>
           <li><strong><?php echo ($mot_unique-$mots_unique_hors); ?></strong> stop words (<?php echo (100-$pourcentage_stopwords_unique);?>%)</li>
         </ul>
       </li>
