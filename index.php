@@ -32,27 +32,26 @@
             Compte le nombre de mot avec la liste des accents considérés comme des accentes
             print_r (str_word_count($requete_all, 1,"àáãâçêéíîóõôúÀÁÃÂÇÊÉÍÎÓÕÔÚ")); => affiche le tableau des mots
         -->
-        <li><strong><?php echo $nbr_mots = str_word_count($requete_all, 0, $carateres_accentues);?></strong> mots :
+        <li><strong><?php echo $nbr_mots = str_word_count($requete_all, 0, $carateres_accentues);?></strong> mots : (mots convertis en minuscule pour les doublons)
             <ul>
               <li><?php
                     foreach ($stopwords as &$word) {
                             $word =  '/\b' . preg_quote(rtrim($word), '/' ) . '\b/u';
                     }
-                    //echo 'diff : '.$word = array_diff( $word, $stopwords );
-                    //$requete_all = mb_split( '[ \n]+', mb_strtolower( $requete_all, 'utf-8' ) );
-
-                    $string = preg_replace($stopwords, '', $requete_all);
+                    $mots_hors_stopwords = preg_replace($stopwords, '', strtolower($requete_all));
                     //var_dump($stopwords);
-                    var_dump($string);?>
-                    <strong><?php echo $nbr_mots_hors_stopwords = str_word_count($string, 0, $carateres_accentues); ?></strong> mots hors stop words (<?php echo $pourcentage_stopwords = round(($nbr_mots_hors_stopwords*100/$nbr_mots), 0);?> %)</li>
+                    //var_dump($mots_hors_stopwords);?>
+                    <strong><?php echo $nbr_mots_hors_stopwords = str_word_count($mots_hors_stopwords, 0, $carateres_accentues); ?></strong> mots hors stop words (<?php echo $pourcentage_stopwords = round(($nbr_mots_hors_stopwords*100/$nbr_mots), 0);?> %)</li>
               <li><strong><?php echo ($nbr_mots-$nbr_mots_hors_stopwords); ?></strong> stop words (<?php echo (100-$pourcentage_stopwords);?> %)</li>
             </ul>
           </li>
       <li><strong><?php
-            $test = explode(' ', strtolower($requete_all));
-            echo $mot_unique = count ($nbr_mots_unique = array_unique($test));?></strong> mots uniques :</strong>
+            $mots_stopwords = explode(' ', strtolower($requete_all));
+            echo $mot_unique = count ($nbr_mots_unique = array_unique($mots_stopwords));
+            //var_dump($nbr_mots_unique);
+            ?></strong> mots uniques (mots convertis en minuscule pour les doublons):</strong>
         <ul>
-          <li><strong><?php  echo $mots_unique_hors = count(array_unique($string = explode(' ', strtolower($string)))); ?></strong> mots hors stop words (<?php echo $pourcentage_stopwords_unique = round(($mots_unique_hors*100/$mot_unique), 0);?>%)</li>
+          <li><strong><?php  echo $mots_unique_hors = count(array_unique($mots_hors_stopwords = explode(' ', strtolower($mots_hors_stopwords)))); ?></strong> mots hors stop words (<?php echo $pourcentage_stopwords_unique = round(($mots_unique_hors*100/$mot_unique), 0);?>%)</li>
           <li><strong><?php echo ($mot_unique-$mots_unique_hors); ?></strong> stop words (<?php echo (100-$pourcentage_stopwords_unique);?>%)</li>
         </ul>
       </li>
