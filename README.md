@@ -1,4 +1,4 @@
-Compteur de mot
+Compteur de mots
 ===============
 
 Les actions du module :
@@ -11,6 +11,6 @@ Les actions du module :
  - (En cours) calcul d'occurence d'expression de 2 mots
  - (En cours) calcul d'occurence d'expression de 3 mots
  - (En cours) calcul de densité en pourcentage
- - (En cours) calcul de la distance entre deux chaînes (levenshtein
+ - (En cours) calcul de la distance entre deux chaînes (levenshtein)
 
 Tous les mots sont convertis en minuscule avant traitement
