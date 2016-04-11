@@ -100,24 +100,47 @@
     <div class="row">
     <div class="col-xs-6">
         <h3>Liste des occurences :</h3>
-        <table class="table table-responsive table-striped table-bordered table-hover">
-            <thead>
+
+        <?php
+
+        function getWordsCount($txt)
+        {
+            //$txt = clean($txt);
+            $words = array();
+            if(preg_match_all('~\p{L}+~',$txt,$matches) > 0)
+            {
+                foreach ($matches[0] as $w)
+                {
+                    $words[$w] = isset($words[$w]) === false ? 1 : $words[$w] + 1;
+                }
+            }
+
+            return $words;
+        }
+        ?>
+            <table class="table table-responsive table-striped table-bordered table-hover">
+                <thead>
                 <tr>
-                    <td>Nb occurences</td>
-                    <td>Mot clés</td>
+                    <th>Nb occurences</th>
+                    <th>Mot clés</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>8</td>
-                    <td>maquillagepinceau</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>maquillage pinceau</td>
-                </tr>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php
+                //echo $mots_hors_stopwords;
+                $words = getWordsCount($requete_all);
+                foreach($words as $key => $value)
+                {
+                    ?>
+                    <tr>
+                    <td><?php echo $value; ?></td>
+                    <td><?php echo $key; ?></td>
+                    </tr><?php
+
+                }?>
+                </tbody>
+            </table>
+
             <?php
 
                 /*$test_trim  = array_map('trim',$array2);
