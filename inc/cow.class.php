@@ -39,9 +39,9 @@ class CountOfWords
         $this->nGrams = array();
         $this->nGramCounts = array();
         $this->processed=FALSE;
-        $this->removeStopWords=TRUE;
+        $this->removeStopWords=FALSE;
         $this->includeLowerNGrams=FALSE;
-        $this->convertToLower=FALSE;
+        $this->convertToLower=TRUE;
     }
 
     public function process(){
@@ -159,7 +159,7 @@ class CountOfWords
         if(file_exists(self::stop_words_file)) {
             $stopWords = explode("\n",strtolower(file_get_contents(self::stop_words_file)));
         } else {
-            $stopWords = array("","the","and","a","of","by","although","i","to","in","on","at","but","or","nor","for","-");
+            $stopWords = array("","the","and","a","of","by","although","i","to","in","on","at","but","or","nor","for","-", 'aucun');
         }
         //printa($stopWords);
         $words = array_diff($words,$stopWords);
