@@ -6,7 +6,7 @@ Les actions du module :
  - Calcul d'occurence d'expression de 2 mots
  - Calcul d'occurence d'expression de 3 mots
  - Convertir tous les mots en minuscule avant traitement pour éviter les doublons (avec/sans majuscule, avec/sans caratère spéciales ou espace)
- - Export au format copie dans le presse papier et csv
+ - Export au format copie dans le presse papier, csv et excel
  - (En cours) Statistiques :
     - calcul de tous les mots hors liste Stop words et le pourcentage par rapport aux nombre de mots
     - déduction du nombre de mots dans la liste des Stop words et pourcentage
