@@ -1,5 +1,5 @@
 <?php
-
+header('Content-Type: text/html; charset=utf-8');
 /**
  * Created by Compteur_de_mot.
  * User: Damien
@@ -21,8 +21,8 @@ class CountOfWords
     public $removeStopWords;
     public $includeLowerNGrams;
     public $convertToLower;
-    const stop_words_file="stop_words_french_fr.txt";
-    const verbose=FALSE;
+    const stop_words_file="stop-words_french_fr.txt";
+    const verbose=TRUE;
 
     /**
      * CountOfWords constructor.
@@ -39,7 +39,7 @@ class CountOfWords
         $this->nGrams = array();
         $this->nGramCounts = array();
         $this->processed=FALSE;
-        $this->removeStopWords=FALSE;
+        $this->removeStopWords=TRUE;
         $this->includeLowerNGrams=FALSE;
         $this->convertToLower=TRUE;
     }
@@ -88,13 +88,18 @@ class CountOfWords
     //PRIVATE METHODS
     private function cleanText() {
 
+        $this->setText(strtr($this->getText(), 'ÁÀÂÄÃÅÇÉÈÊËÍÏÎÌÑÓÒÔÖÕÚÙÛÜÝ', 'aaaaaaceeeeiiiinooooouuuuyy'));
+        $this->setText(strtr($this->getText(), 'áàâäãåçéèêëíìîïñóòôöõúùûüýÿ', 'aaaaaaceeeeiiiinooooouuuuyy'));
+
+        if($this->convertToLower) $this->setText(strtolower($this->getText()));
+
         $searchReplace = array(
             //REMOVALS
             "'<script[^>]*?>.*?</script>'si" => " " //Strip out Javascript
-        , "'<style[^>]*?>.*?</style>'si" => " " //Strip out Styles
-        , "'<[/!]*?[^<>]*?>'si" => " " //Strip out HTML tags
+            , "'<style[^>]*?>.*?</style>'si" => " " //Strip out Styles
+            , "'<[/!]*?[^<>]*?>'si" => " " //Strip out HTML tags
             //ACCEPT ONLY
-        , "/[^a-zA-Z0-9\-' ]/" => " " //only accept these characters
+            , "/[^a-zA-Z0-9\-' ]/" => " " //only accept these characters
 
         );
         foreach($searchReplace as $s=>$r){
@@ -105,9 +110,9 @@ class CountOfWords
         $this->setText(html_entity_decode($this->getText()));
         if($this->convertToLower) $this->setText(strtolower($this->getText()));
         //$this->setText(strip_tags($this->text));
-        //if(self::verbose) { echo "<hr>BEFORE<hr><pre>"; echo $this->getText(); echo "</pre>";}
+        if(self::verbose) { echo "<hr>BEFORE<hr><pre>"; echo $this->getText(); echo "</pre>";}
         $this->setText(preg_replace($search, $replace, $this->getText()));
-        //if(self::verbose) { echo "<hr>AFTER<hr><pre>"; print_r( preg_split('/\s+/',$this->getText()) ); echo "</pre>";}
+        if(self::verbose) { echo "<hr>AFTER<hr><pre>"; print_r( preg_split('/\s+/',$this->getText()) ); echo "</pre>";}
     }
 
     private function addNGrams($nGrams){
@@ -135,7 +140,11 @@ class CountOfWords
         } else {
             $nGrams = $this->unigrams;
         }
-        //if($this->removeStopWords) $nGrams = $this->removeStopWords($nGrams);
+        // remove stop words
+        if($this->removeStopWords) {
+            $nGrams = $this->removeStopWords($nGrams);
+            //var_dump($nGrams);
+        }
         $this->addNGrams($nGrams);
         if($this->includeLowerNGrams && $N>1) {
             $this->identifyNGrams($N-1);
@@ -158,13 +167,16 @@ class CountOfWords
         if(self::verbose) { echo "removedStopWords => wordcount (IN: ".$numWordsIn.") "; }
         if(file_exists(self::stop_words_file)) {
             $stopWords = explode("\n",strtolower(file_get_contents(self::stop_words_file)));
+            //var_dump($stopWords);
+            //$stopWords = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $stopWords);
         } else {
-            $stopWords = array("","the","and","a","of","by","although","i","to","in","on","at","but","or","nor","for","-", 'aucun');
+            $stopWords = array("","the","and","a","of","by","although","i","to","in","on","at","but","or","nor","for","-", 'afin', 'à', 'ainsi');
         }
-        //printa($stopWords);
-        $words = array_diff($words,$stopWords);
+        var_dump($words);
+        $words = array_diff($words, $stopWords);
         $words = array_values($words);//re-indexes array
         $numWordsOut = count($words);
+        echo $numWordsOut;
         if(self::verbose) { echo " (OUT: ".$numWordsOut.") Removed: ".($numWordsIn-$numWordsOut)."<br/>"; }
         return $words;
     }

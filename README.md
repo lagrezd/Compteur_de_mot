@@ -15,5 +15,5 @@ Les actions du module :
     - calcul du nombre de caractères avec et sans espaces
  - (En cours) Liste de Stop words Google chargée en fichier .txt (mots à bannir)
  - (En cours) Ajout d'upload et d'url en complément du champ textarea
- - (En cours) calcul de densité en pourcentage
+ - (En cours) calcul de densité en pourcentage sur les occurences
  - (En cours) calcul de la distance entre deux chaînes (levenshtein)

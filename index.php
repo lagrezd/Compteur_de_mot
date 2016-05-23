@@ -1,12 +1,13 @@
 <?php
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
+header('Content-Type: text/html; charset=utf-8');
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
     include('/inc/cow.class.php');
     $cow = new CountOfWords();
 
 //var_dump($cow);
 ?>
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -130,9 +131,8 @@
         } );
     </script>
 
-
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -153,17 +153,6 @@
                 </button>
                 <a class="navbar-brand" href="#">Compteur de mots</a>
             </div>
-            <!--div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="#">Help</a></li>
-                </ul>
-                <form class="navbar-form navbar-right">
-                    <input type="text" class="form-control" placeholder="Search...">
-                </form>
-            </div-->
         </div>
     </nav>
     <div class="container-fluid">
@@ -171,15 +160,15 @@
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
                     <li class="active"><a href="#">Dashboard <span class="sr-only">(current)</span></a></li>
-                    <!--li><a href="#">Reports</a></li>
-                    <li><a href="#">Analytics</a></li>
-                    <li><a href="#">Export</a></li-->
+                    <li><a href="#">Synthèse</a></li>
+                    <li><a href="#">Graphique</a></li>
+                    <!--li><a href="#">Export</a></li-->
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <div class="col-xs-12">
                     <h1 class="page-header">Dashboard</h1>
-                    <form action="index.php" method="POST">
+                    <form action="index.php" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="col-md-7">
                                 <div class="row">
@@ -220,7 +209,7 @@
                     </form>
                 </div>
 
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-md-6">
                     <h2>Occurence de mots</h2>
                     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
@@ -251,7 +240,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-md-6">
                     <h2>Occurence de 2 mots</h2>
                     <table id="example2" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
