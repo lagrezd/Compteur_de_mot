@@ -49,7 +49,7 @@ class CountOfWords
         $this->cleanText();
         $this->identifyNGrams();
         $this->countNGrams();
-        //$this->processed = TRUE;
+        $this->processed = TRUE;
     }
     public function process2(){
         $this->wd_remove_accents($this->getText());
@@ -181,8 +181,6 @@ class CountOfWords
         );
         $text = strtr( $this->getText(), $unwanted_array );
         //$text = preg_replace($_convertTable, $this->getText());
-        ?><pre><?php print($text);?></pre><?php
-        //die();
         $searchReplace = array(
             //REMOVALS
             "'<script[^>]*?>.*?</script>'si" => " " //Strip out Javascript
