@@ -293,7 +293,7 @@ error_reporting(E_ALL);
                             //echo $cow->printSummary();
                             $words = $cow->getTopNGrams(100);
                             $total = array_sum($words);
-                            foreach($words as $key => $value)
+                            foreach($words as $key => $value) 
                             {
                                 ?>
                                 <tr>
