@@ -156,7 +156,7 @@ error_reporting(E_ALL);
         </div>
     </nav>
     <div class="container-fluid">
-        <div-- class="row">
+        <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
                     <li class="active"><a href="#">Dashboard <span class="sr-only">(current)</span></a></li>
