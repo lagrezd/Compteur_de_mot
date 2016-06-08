@@ -226,13 +226,14 @@ error_reporting(E_ALL);
                             $cow->process();
                             //echo $cow->printSummary();
                             $words = $cow->getTopNGrams(100);
+                            $total = array_sum($words);
                             foreach($words as $key => $value)
                             {
                                 ?>
                                 <tr>
                                 <td><?php echo $value; ?></td>
                                 <td><?php echo $key; ?></td>
-                                <td>-</td>
+                                <td><?php echo round(($value / $total) * 100, 2); ?> %</td>
                                 </tr><?php
                             }
                         }
@@ -258,13 +259,14 @@ error_reporting(E_ALL);
                             $cow->process2();
                             //echo $cow->printSummary();
                             $words = $cow->getTopNGrams(100);
+                            $total = array_sum($words);
                             foreach($words as $key => $value)
                             {
                                 ?>
                                 <tr>
                                 <td><?php echo $value; ?></td>
                                 <td><?php echo $key; ?></td>
-                                <td>-</td>
+                                <td><?php echo round(($value / $total) * 100, 2); ?> %</td>
                                 </tr><?php
                             }
                         }
@@ -290,13 +292,14 @@ error_reporting(E_ALL);
                             $cow->process3();
                             //echo $cow->printSummary();
                             $words = $cow->getTopNGrams(100);
+                            $total = array_sum($words);
                             foreach($words as $key => $value)
                             {
                                 ?>
                                 <tr>
                                 <td><?php echo $value; ?></td>
                                 <td><?php echo $key; ?></td>
-                                <td>-</td>
+                                <td><?php echo round(($value / $total) * 100, 2); ?> %</td>
                                 </tr><?php
                             }
                         }
