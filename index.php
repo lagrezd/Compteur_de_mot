@@ -1,4 +1,6 @@
 <?php
+session_start();
+//$_SESSION['words'] = $words;
 header('Content-Type: text/html; charset=utf-8');
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -159,13 +161,13 @@ error_reporting(E_ALL);
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li class="active"><a href="#">Dashboard <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Synthèse</a></li>
+                    <li class="active"><a href="http://localhost/Compteur_de_mot/">Dashboard <span class="sr-only">(current)</span></a></li>
+                    <li><a href="http://localhost/Compteur_de_mot/synthese.php">Synthèse</a></li>
                     <!--li><a href="#">Graphique</a></li-->
                     <li><a href="#">Stop words</a></li>
                 </ul>
             </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="padding-top: 15px">
                 <div class="col-xs-12">
                     <h1 class="page-header">Dashboard</h1>
                     <form action="index.php" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
@@ -173,11 +175,10 @@ error_reporting(E_ALL);
                             <div class="col-md-7">
                                 <div class="row">
                                     <div class="form-group">
-                                        <textarea rows="15" cols="160" name="mots" id="mots" class="form-control" placeholder="Insérer la liste des mots ici..." style="resize: vertical"><?php if (isset($_POST['mots'])) { echo htmlspecialchars($_POST['mots']);} ?></textarea>
+                                        <textarea rows="15" cols="160" name="mots" id="mots" class="form-control" placeholder="Insérer la liste des mots ici..." style="resize: vertical"><?php if(isset($_POST['mots'])){echo htmlspecialchars($_POST['mots']);}elseif(isset($_SESSION['mots'])){echo htmlspecialchars($_SESSION['mots']);}?></textarea>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <div class="col-md-5">
                             <!--div class="form-group">
@@ -207,6 +208,13 @@ error_reporting(E_ALL);
                             </div>
                         </div>
                     </form>
+
+                    <?php
+                    if (isset($_POST['mots'])) {
+                        $_SESSION['mots'] = $_POST['mots'];
+                        //var_dump($_SESSION['mots']);
+                        //die();
+                    } ?>
                 </div>
 
                 <div class="col-xs-12 col-md-6">
@@ -221,10 +229,12 @@ error_reporting(E_ALL);
                         </thead>
                         <tbody>
                         <?php
-                        if(isset($_POST['mots'])) {
-                            $cow->addText($_POST['mots']);
+                        if(isset($_SESSION['mots'])) {
+                            $cow->addText($_SESSION['mots']);
                             $cow->process();
-                            //echo $cow->printSummary();
+
+                            //$_SESSION['mots'] = $_POST['mots'];
+                                //echo $cow->printSummary();
                             $words = $cow->getTopNGrams(100);
                             $total = array_sum($words);
                             foreach($words as $key => $value)
@@ -253,9 +263,9 @@ error_reporting(E_ALL);
                         </thead>
                         <tbody>
                         <?php
-                        if(isset($_POST['mots'])) {
+                        if(isset($_SESSION['mots'])) {
                             $cow = new CountOfWords();
-                            $cow->addText($_POST['mots']);
+                            $cow->addText($_SESSION['mots']);
                             $cow->process2();
                             //echo $cow->printSummary();
                             $words = $cow->getTopNGrams(100);
@@ -286,14 +296,14 @@ error_reporting(E_ALL);
                         </thead>
                         <tbody>
                         <?php
-                        if(isset($_POST['mots'])) {
+                        if(isset($_SESSION['mots'])) {
                             $cow = new CountOfWords();
-                            $cow->addText($_POST['mots']);
+                            $cow->addText($_SESSION['mots']);
                             $cow->process3();
                             //echo $cow->printSummary();
                             $words = $cow->getTopNGrams(100);
                             $total = array_sum($words);
-                            foreach($words as $key => $value) 
+                            foreach($words as $key => $value)
                             {
                                 ?>
                                 <tr>
@@ -307,7 +317,7 @@ error_reporting(E_ALL);
                         </tbody>
                     </table>
                 </div>
-                </div>
+            </div>
             <!--h3>Statistiques :</h3>
             <ul>
                 <li><strong><?php echo $count_word->getAllWordsCount($requete_all); ?></strong> mots : (mots convertis en minuscule pour enlever les doublons)
@@ -336,11 +346,8 @@ error_reporting(E_ALL);
                         <li><strong><?php echo ($mot_unique-$mots_unique_hors); ?></strong> stop words (<?php echo (100-$pourcentage_stopwords_unique);?>%)</li>
                     </ul>
                 </li>
-                <li><strong><?php echo $count_word->getCaracteres($requete_all);?></strong> caratères</li>
-                <li><strong><?php echo $nbr_caracteres_sans_espaces = strlen(utf8_decode(str_replace(' ', '', utf8_decode($requete_all))));?></strong> caractères sans les espaces</li>
             </ul>
-            <?php //} ?>
-        </div-->
+        </div>
     </div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- Bootstrap core JavaScript
@@ -352,5 +359,6 @@ error_reporting(E_ALL);
     <script src="js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
+        <?php $_SESSION["mots"]=$words; ?>
 </body>
 </html>

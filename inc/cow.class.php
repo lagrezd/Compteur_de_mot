@@ -416,11 +416,11 @@ class CountOfWords
     }
 
 
-    /*
+
 public function getCaracteres($txt){
     return strlen(utf8_decode($txt));
 }
-
+/*
 public function cleanText()
 {
     // Remove this caractere
@@ -441,7 +441,7 @@ public function removeStopWords($txt)
     }
     return preg_replace($stopwords, '', strtolower($txt));
 
-}
+}*/
 
 public function getAllWordsCount($txt) {
     return str_word_count($txt, 0, $this->cleanText());
