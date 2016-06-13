@@ -68,7 +68,7 @@ $cow = new CountOfWords();
                 <li><a href="http://localhost/Compteur_de_mot/">Dashboard <span class="sr-only">(current)</span></a></li>
                 <li class="active"><a href="#">Synthèse</a></li>
                 <!--li><a href="#">Graphique</a></li-->
-                <li><a href="#">Stop words</a></li>
+                <li><a href="http://localhost/Compteur_de_mot/stopwords.php">Stop words</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="padding-top: 15px">
@@ -90,7 +90,16 @@ $cow = new CountOfWords();
                             <i class="fa fa-comments"></i>
                         </div>
                         <div class="details">
-                            <div class="number"> <?php echo $cow->getAllWordsCount($_SESSION['mots']); ?> </div>
+                            <?php
+                            $cow->addText($_SESSION['mots']);
+                            $cow->process();
+                            $words = $cow->getTopNGrams();
+                            //printa($words);
+                            /*$cow->process();
+                            $words = $cow->getAllWordsCount($_SESSION['mots']);*/
+                            ?>
+
+                            <div class="number"> <?php echo str_word_count($_SESSION['mots']); ?> </div>
                             <div class="desc">  mots </div>
                         </div>
                         <a class="more" href="#"> Voir le détail
@@ -104,8 +113,8 @@ $cow = new CountOfWords();
                             <i class="fa fa-bar-chart-o"></i>
                         </div>
                         <div class="details">
-                            <div class="number"> -<?php //echo $nbr_mots_hors_stopwords = str_word_count($cow->removeStopWords($_SESSION['mots']), 0, $cow->getAllWordsCount($_SESSION['mots'])); ?> </div>
-                            <div class="desc"> mots hors stop words (-<?php //echo $pourcentage_stopwords = round(($nbr_mots_hors_stopwords*100/$count_word->getAllWordsCount($requete_all)), 0);?> %) </div>
+                            <div class="number"> <?php echo $nbr_mots_hors_stopwords = str_word_count($cow->removeStopWords2($_SESSION['mots']), 0, $_SESSION['mots']); ?> </div>
+                            <div class="desc"> mots hors stop words (<?php echo $pourcentage_stopwords = round(($nbr_mots_hors_stopwords*100/$cow->getAllWordsCount($_SESSION['mots'])), 0);?> %) </div>
                         </div>
                         <a class="more" href="#"> Voir le détails
                             <i class="m-icon-swapright m-icon-white"></i>
@@ -118,8 +127,11 @@ $cow = new CountOfWords();
                             <i class="fa fa-shopping-cart"></i>
                         </div>
                         <div class="details">
-                            <div class="number"> -<?php //echo ($count_word->getAllWordsCount($requete_all)-$nbr_mots_hors_stopwords); ?></div>
-                            <div class="desc">  stop words (-<?php //echo (100-$pourcentage_stopwords);?> %) </div>
+                            <?php
+                            //var_dump(str_word_count($_SESSION['mots']));
+                            ?>
+                            <div class="number"> <?php echo str_word_count($_SESSION['mots']-$nbr_mots_hors_stopwords); ?></div>
+                            <div class="desc">  stop words (<?php echo (100-$pourcentage_stopwords);?> %) </div>
                         </div>
                         <a class="more" href="#"> Voir le détails
                             <i class="m-icon-swapright m-icon-white"></i>

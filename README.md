@@ -7,7 +7,7 @@ Les actions du module :
  - Calcul d'occurence d'expression de 3 mots
  - Convertir tous les mots en minuscule avant traitement pour éviter les doublons (avec/sans majuscule, avec/sans caratère spéciales ou espace)
  - Export au format copie dans le presse papier, csv et excel
- - Liste de Stop words Google chargée en fichier .txt (avec mots à bannir)
+ - Ajout/modification des Stop words chargée en fichier .txt (avec mots à bannir)
  - Calcul de densité en pourcentage sur les occurences
  - Statistiques :
     - Calcul du nomber de mots

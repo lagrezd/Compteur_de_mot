@@ -417,37 +417,37 @@ class CountOfWords
 
 
 
-public function getCaracteres($txt){
-    return strlen(utf8_decode($txt));
-}
-/*
-public function cleanText()
-{
-    // Remove this caractere
-    return "âàáãäåÀÁÃÂçÇêéèêëÊÉìíïîÌÍÎÏñôðòóõöÒÓÔÕÖûùúüÙÚÛÜÿýÝŸ";
-
-}
-
-public function removeStopWords($txt)
-{
-    $file = fopen("./stop-words/stop-words_french_fr.txt", "r");
-    $stopwords = array();
-    while (!feof($file)) {
-        $stopwords[] = fgets($file);
+    public function getCaracteres($txt){
+        return strlen(utf8_decode($txt));
     }
-    fclose($file);
-    foreach ($stopwords as &$word) {
-        $word =  '/\b' . preg_quote(rtrim($word), '/' ) . '\b/u';
+    /*
+    public function cleanText()
+    {
+        // Remove this caractere
+        return "âàáãäåÀÁÃÂçÇêéèêëÊÉìíïîÌÍÎÏñôðòóõöÒÓÔÕÖûùúüÙÚÛÜÿýÝŸ";
+    
     }
-    return preg_replace($stopwords, '', strtolower($txt));
-
-}*/
-
-public function getAllWordsCount($txt) {
-    return str_word_count($txt, 0, $this->cleanText());
-}
-
-/**
+    */
+    public function removeStopWords2($txt)
+    {
+        $file = fopen("./stop-words_french_fr.txt", "r");
+        $stopwords = array();
+        while (!feof($file)) {
+            $stopwords[] = fgets($file);
+        }
+        fclose($file);
+        foreach ($stopwords as &$word) {
+            $word =  '/\b' . preg_quote(rtrim($word), '/' ) . '\b/u';
+        }
+        return preg_replace($stopwords, '', strtolower($txt));
+    
+    }
+    
+    public function getAllWordsCount($txt) {
+        return str_word_count($txt, 0, $this->cleanText2());
+    }
+    
+    /**
  * @param $txt
  * @return array
  *//*

@@ -164,7 +164,7 @@ error_reporting(E_ALL);
                     <li class="active"><a href="http://localhost/Compteur_de_mot/">Dashboard <span class="sr-only">(current)</span></a></li>
                     <li><a href="http://localhost/Compteur_de_mot/synthese.php">Synthèse</a></li>
                     <!--li><a href="#">Graphique</a></li-->
-                    <li><a href="#">Stop words</a></li>
+                    <li><a href="http://localhost/Compteur_de_mot/stopwords.php">Stop words</a></li>
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="padding-top: 15px">
